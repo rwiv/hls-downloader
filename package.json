@@ -4,7 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "start": "ts-node src/main/app.ts",
+    "start": "node dist/main/index.js",
+    "build": "tsc",
+    "dev": "ts-node src/main/index.ts",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],

@@ -1,3 +1,6 @@
 .idea
 node_modules
 download
+dist
+config/m3u8.txt
+config/url.txt

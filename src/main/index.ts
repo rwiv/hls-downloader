@@ -4,6 +4,7 @@ import HlsParser from "./modules/HlsParser";
 import HlsDownloader from "./modules/HlsDownloader";
 import constants from "./misc/constants";
 import ChunkFileManager from "./modules/ChunkFileManager";
+import {ReqInfo} from "./modules/types";
 
 async function main(outName: string, windowSize: number) {
   const cPath = constants.path.config;
@@ -16,13 +17,13 @@ async function main(outName: string, windowSize: number) {
   const downloader = new HlsDownloader();
   const chunkManager = new ChunkFileManager();
   const sfNames = parser.parse(m3u8);
-  const tempName = Date.now().toString()
-  await downloader.download(tempName, prefixUrl, sfNames, windowSize);
-  // await downloader.downloadSync(tempName, prefixUrl, sfNames);
+  const tgName = Date.now().toString();
+  const info: ReqInfo = { tgName, sfNames, prefixUrl, windowSize };
+  await downloader.download(info);
 
-  const tdp = path.join(constants.path.download, tempName);
+  const tdp = path.join(constants.path.download, tgName);
   await chunkManager.merge(tdp, outName);
-  // await fs.remove(tdp);
+  await fs.remove(tdp);
 }
 
 main("out.ts", 5);
